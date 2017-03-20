@@ -36,7 +36,7 @@
 #include <Gui/Language/Translator.h>
 #include "Workbench.h"
 
-#include <Mod/Start/App/StartConfiguration.h>
+#include <freecad/Start/App/StartConfiguration.h>
 
 
 // use a different name to CreateCommand()
@@ -81,7 +81,7 @@ PyMOD_INIT_FUNC(StartGui)
 
     // load dependent module
     try {
-        Base::Interpreter().runString("import WebGui");
+        Base::Interpreter().runString("from freecad.Web import WebGui");
     }
     catch(const Base::Exception& e) {
         PyErr_SetString(PyExc_ImportError, e.what());

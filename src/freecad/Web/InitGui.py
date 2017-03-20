@@ -1,8 +1,12 @@
-# FreeCAD init script of the Start module  
-# (c) 2001 Juergen Riegel
+# Web gui init module
+# (c) 2003 Juergen Riegel
+#
+# Gathering all the information to start FreeCAD
+# This is the second one of three init scripts, the third one
+# runs when the gui is up
 
 #***************************************************************************
-#*   (c) Juergen Riegel (juergen.riegel@web.de) 2002                       *   
+#*   (c) Juergen Riegel (juergen.riegel@web.de) 2002                       *
 #*                                                                         *
 #*   This file is part of the FreeCAD CAx development system.              *
 #*                                                                         *
@@ -13,14 +17,35 @@
 #*   for detail see the LICENCE text file.                                 *
 #*                                                                         *
 #*   FreeCAD is distributed in the hope that it will be useful,            *
-#*   but WITHOUT ANY WARRANTY; without even the implied warranty of        * 
+#*   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
 #*   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
 #*   GNU Lesser General Public License for more details.                   *
 #*                                                                         *
 #*   You should have received a copy of the GNU Library General Public     *
-#*   License along with FreeCAD; if not, write to the Free Software        * 
+#*   License along with FreeCAD; if not, write to the Free Software        *
 #*   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  *
 #*   USA                                                                   *
 #*                                                                         *
 #*   Juergen Riegel 2002                                                   *
 #***************************************************************************/
+import os
+
+import FreeCADGui
+from FreeCADGui import Workbench
+
+
+class WebWorkbench ( Workbench ):
+    "Web workbench object"
+    def __init__(self):
+        self.__class__.Icon = os.path.join(os.path.dirname(__file__), "Gui/Resources/icons/WebWorkbench.svg")
+        self.__class__.MenuText = "Web"
+        self.__class__.ToolTip = "Web workbench"
+
+    def Initialize(self):
+        # load the module
+        from . import WebGui
+
+    def GetClassName(self):
+        return "WebGui::Workbench"
+
+FreeCADGui.addWorkbench(WebWorkbench())

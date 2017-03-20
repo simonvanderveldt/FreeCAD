@@ -1,7 +1,7 @@
 #***************************************************************************
 #*                                                                         *
-#*   Copyright (c) 2012                                                    * 
-#*   Yorik van Havre <yorik@uncreated.net>                                 * 
+#*   Copyright (c) 2012                                                    *
+#*   Yorik van Havre <yorik@uncreated.net>                                 *
 #*                                                                         *
 #*   This program is free software; you can redistribute it and/or modify  *
 #*   it under the terms of the GNU Lesser General Public License (LGPL)    *
@@ -54,10 +54,9 @@ vmajor, vminor = v[0], v[1]
 vbuild = v[2].split(" ")[0]
 
 # here is the html page skeleton
-resources_dir = os.path.join(FreeCAD.getResourceDir(), "Mod", "Start", "StartPage")
-html_filename = os.path.join(resources_dir, "StartPage.html")
-js_filename = os.path.join(resources_dir, "StartPage.js")
-css_filename = os.path.join(resources_dir, "StartPage.css")
+html_filename = os.path.join(os.path.dirname(__file__), "StartPage.html")
+js_filename = os.path.join(os.path.dirname(__file__), "StartPage.js")
+css_filename = os.path.join(os.path.dirname(__file__), "StartPage.css")
 
 with open(html_filename, 'rb') as f:
     startpage_html = f.read()
@@ -72,11 +71,11 @@ def getInfo(filename):
     "returns available file information"
 
     def getLocalTime(timestamp):
-        "returns a local time from a timestamp"       
+        "returns a local time from a timestamp"
         return time.strftime("%m/%d/%Y %H:%M:%S",time.localtime(timestamp))
 
     def getSize(size):
-        "returns a human-readable size" 
+        "returns a human-readable size"
         if size > 1024*1024:
             hsize = str(size/(1024*1024)) + "Mb"
         elif size > 1024:
@@ -84,9 +83,9 @@ def getInfo(filename):
         else:
             hsize = str(size) + "b"
         return hsize
-        
+
     html = '<h3>'+os.path.basename(filename)+'</h3>'
-    
+
     if os.path.exists(filename):
         # get normal file info
         s = os.stat(filename)
@@ -105,13 +104,13 @@ def getInfo(filename):
                 doc = zfile.read(files[0])
                 doc = doc.replace("\n"," ")
                 author = re.findall("Property name=\"CreatedBy.*?String value=\"(.*?)\"\/>",doc)
-                if author: 
+                if author:
                     html += "<p>" + text66 + ": " + author[0] + "</p>"
                 company = re.findall("Property name=\"Company.*?String value=\"(.*?)\"\/>",doc)
-                if company: 
+                if company:
                     html += "<p>" + text67 + ": " + company[0] + "</p>"
                 lic = re.findall("Property name=\"License.*?String value=\"(.*?)\"\/>",doc)
-                if lic: 
+                if lic:
                     html += "<p>" + text68 + ": " + lic[0] + "</p>"
                 if image in files:
                     image=zfile.read(image)
@@ -158,7 +157,7 @@ def getRecentFiles():
                 html += '<span class="disabled">'
                 html += fn
                 html += '</span></li>'
-                
+
     html += '</ul>'
     return html
 
@@ -290,11 +289,11 @@ def handle():
     # add strings into files
     html = insert_page_resources(startpage_html)
     html = replace_js_text(html)
-    
+
     # add recent files
     recentfiles = getRecentFiles()
     html = html.replace("recentfiles",recentfiles)
-        
+
     # add custom blocks
     html = html.replace("customblocks",getCustomBlocks())
 
@@ -307,4 +306,3 @@ def exportTestFile():
     f = open(os.path.expanduser("~")+os.sep+"freecad-startpage.html","wb")
     f.write(handle())
     f.close()
-

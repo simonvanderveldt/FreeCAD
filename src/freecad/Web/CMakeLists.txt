@@ -12,10 +12,10 @@ endif(BUILD_GUI)
 
 INSTALL(
     FILES
-        Init.py
+        __init__.py
         InitGui.py
     DESTINATION
-        Mod/Web
+        Mod/freecad/Web
 )
 
 INSTALL(
@@ -23,5 +23,5 @@ INSTALL(
         Webscripts/__init__.py
         Webscripts/Sketchfab.py
     DESTINATION
-        Mod/Web/Webscripts
+        Mod/freecad/Web/Webscripts
 )

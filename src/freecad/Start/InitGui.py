@@ -1,4 +1,4 @@
-# Start gui init module  
+# Start gui init module
 # (c) 2003 Juergen Riegel
 #
 # Gathering all the information to start FreeCAD
@@ -28,21 +28,22 @@
 #*                                                                         *
 #*   Juergen Riegel 2002                                                   *
 #***************************************************************************/
-
-
+import FreeCADGui
+from FreeCADGui import Workbench
+import os
 
 class StartWorkbench ( Workbench ):
     "Start workbench object"
     def __init__(self):
-        self.__class__.Icon = FreeCAD.getResourceDir() + "Mod/Start/Resources/icons/StartWorkbench.svg"
+        self.__class__.Icon = os.path.join(os.path.dirname(__file__), "Gui/Resources/icons/StartWorkbench.svg")
         self.__class__.MenuText = "Start"
         self.__class__.ToolTip = "Start workbench"
 
     def Initialize(self):
         # load the module
-        import StartGui
-        import Start
+        from . import StartGui
+        from . import Start
     def GetClassName(self):
         return "StartGui::Workbench"
 
-Gui.addWorkbench(StartWorkbench())
+FreeCADGui.addWorkbench(StartWorkbench())

@@ -47,22 +47,15 @@ SOURCE_GROUP("Moc" FILES ${SketcherGui_MOC_SRCS})
 add_library(WebGui SHARED ${WebGui_SRCS})
 target_link_libraries(WebGui ${WebGui_LIBS})
 
-
-fc_target_copy_resource(WebGui 
-    ${CMAKE_SOURCE_DIR}/src/Mod/Web
-    ${CMAKE_BINARY_DIR}/Mod/Web
-    ${Web_Scripts}
-    Init.py InitGui.py)
-
 SET_BIN_DIR(WebGui WebGui /Mod/Web)
 SET_PYTHON_PREFIX_SUFFIX(WebGui)
 
-INSTALL(TARGETS WebGui DESTINATION ${CMAKE_INSTALL_LIBDIR})
+INSTALL(TARGETS WebGui DESTINATION Mod/freecad/Web)
 
 SET(WebGuiIcon_SVG
     Resources/icons/WebWorkbench.svg
 )
 
-fc_copy_sources(WebGui "${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_DATADIR}/Mod/Web" ${WebGuiIcon_SVG})
+fc_copy_sources(WebGui "${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_DATADIR}/Mod/freecad/Web" ${WebGuiIcon_SVG})
 
-INSTALL(FILES ${WebGuiIcon_SVG} DESTINATION "${CMAKE_INSTALL_DATADIR}/Mod/Web/Resources/icons")
+INSTALL(FILES ${WebGuiIcon_SVG} DESTINATION "Mod/freecad/Web/Gui/Resources/icons")

@@ -66,14 +66,6 @@ if(BUILD_DRAFT)
   add_subdirectory(Draft)
 endif(BUILD_DRAFT)
 
-if(BUILD_WEB)
-  add_subdirectory(Web)
-endif(BUILD_WEB)
-
-if(BUILD_START)
-  add_subdirectory(Start)
-endif(BUILD_START)
-
 if(BUILD_IDF)
   add_subdirectory(Idf)
 endif(BUILD_IDF)

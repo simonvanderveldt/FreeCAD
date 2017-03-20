@@ -43,7 +43,7 @@
 #include <Base/Console.h>
 #include <Base/Exception.h>
 
-#include <Mod/Start/App/StartConfiguration.h>
+#include <freecad/Start/App/StartConfiguration.h>
 
 using namespace StartGui;
 
@@ -69,14 +69,15 @@ void StartGui::Workbench::activated()
 
     try {
         QByteArray utf8Title = title.toUtf8();
-        Gui::Command::doCommand(Gui::Command::Gui,"import WebGui");
-        Gui::Command::doCommand(Gui::Command::Gui,"from StartPage import StartPage");
+        Gui::Command::doCommand(Gui::Command::Gui,"import os");
+        Gui::Command::doCommand(Gui::Command::Gui,"from freecad.Web import WebGui");
+        Gui::Command::doCommand(Gui::Command::Gui,"from freecad.Start.StartPage import StartPage");
 #if defined(FC_OS_WIN32)
         Gui::Command::doCommand(Gui::Command::Gui,"WebGui.openBrowserHTML"
-        "(StartPage.handle(),App.getResourceDir() + 'Mod/Start/StartPage/','%s')", utf8Title.data());
+        "(StartPage.handle(),os.path.join(os.path.dirname(StartPage.__file__), 'StartPage.html'),'%s')", utf8Title.data());
 #else
         Gui::Command::doCommand(Gui::Command::Gui,"WebGui.openBrowserHTML"
-        "(StartPage.handle(),'file://' + App.getResourceDir() + 'Mod/Start/StartPage/','%s')", utf8Title.data());
+        "(StartPage.handle(),'file://' + os.path.join(os.path.dirname(StartPage.__file__), 'StartPage.html'),'%s')", utf8Title.data());
 #endif
     }
     catch (const Base::Exception& e) {
@@ -102,10 +103,10 @@ Gui::ToolBarItem* StartGui::Workbench::setupToolBars() const
     // web navigation toolbar
     Gui::ToolBarItem* navigation = new Gui::ToolBarItem(root);
     navigation->setCommand("Navigation");
-    *navigation << "Web_OpenWebsite" 
-                << "Separator" 
-                << "Web_BrowserBack" 
-                << "Web_BrowserNext" 
+    *navigation << "Web_OpenWebsite"
+                << "Separator"
+                << "Web_BrowserBack"
+                << "Web_BrowserNext"
                 << "Web_BrowserRefresh"
                 << "Web_BrowserStop"
                 << "Separator"
