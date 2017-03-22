@@ -1,7 +1,7 @@
 #***************************************************************************
 #*                                                                         *
-#*   Copyright (c) 2011                                                    *  
-#*   Yorik van Havre <yorik@uncreated.net>                                 *  
+#*   Copyright (c) 2011                                                    *
+#*   Yorik van Havre <yorik@uncreated.net>                                 *
 #*                                                                         *
 #*   This program is free software; you can redistribute it and/or modify  *
 #*   it under the terms of the GNU Lesser General Public License (LGPL)    *
@@ -20,11 +20,17 @@
 #*   USA                                                                   *
 #*                                                                         *
 #***************************************************************************
+import os
+
+from FreeCAD import Console
+import FreeCADGui
+from FreeCADGui import Workbench
+
 
 class ArchWorkbench(Workbench):
     "Arch workbench object"
     def __init__(self):
-        self.__class__.Icon = FreeCAD.getResourceDir() + "Mod/Arch/Resources/icons/ArchWorkbench.svg"
+        self.__class__.Icon = os.path.join(os.path.dirname(__file__), "resources/icons/ArchWorkbench.svg")
         self.__class__.MenuText = "Arch"
         self.__class__.ToolTip = "Architecture workbench"
 
@@ -90,26 +96,26 @@ class ArchWorkbench(Workbench):
                 FreeCADGui.addPreferencePage(":/ui/preferences-draftvisual.ui","Draft")
                 FreeCADGui.addPreferencePage(":/ui/preferences-drafttexts.ui","Draft")
                 FreeCADGui.draftToolBar.loadedPreferences = True
-        Log ('Loading Arch module... done\n')
+        Console.PrintLog('Loading Arch module... done\n')
 
     def Activated(self):
         if hasattr(FreeCADGui,"draftToolBar"):
             FreeCADGui.draftToolBar.Activated()
         if hasattr(FreeCADGui,"Snapper"):
             FreeCADGui.Snapper.show()
-        Msg("Arch workbench activated\n")
-                
+        Console.PrintMessage("Arch workbench activated\n")
+
     def Deactivated(self):
         if hasattr(FreeCADGui,"draftToolBar"):
             FreeCADGui.draftToolBar.Deactivated()
         if hasattr(FreeCADGui,"Snapper"):
             FreeCADGui.Snapper.hide()
-        Msg("Arch workbench deactivated\n")
+        Console.PrintMessage("Arch workbench deactivated\n")
 
     def ContextMenu(self, recipient):
         self.appendContextMenu("Utilities",self.draftcontexttools)
 
-    def GetClassName(self): 
+    def GetClassName(self):
         return "Gui::PythonWorkbench"
 
 FreeCADGui.addWorkbench(ArchWorkbench)
@@ -118,5 +124,3 @@ FreeCADGui.addWorkbench(ArchWorkbench)
 import Arch_rc
 FreeCADGui.addPreferencePage(":/ui/preferences-ifc.ui","Import-Export")
 FreeCADGui.addPreferencePage(":/ui/preferences-dae.ui","Import-Export")
-
-

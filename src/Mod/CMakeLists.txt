@@ -45,7 +45,7 @@ IF(EIGEN3_FOUND)
     if(BUILD_SKETCHER)
       add_subdirectory(Sketcher)
     endif(BUILD_SKETCHER)
-    
+
     if(BUILD_ROBOT)
       add_subdirectory(Robot)
     endif(BUILD_ROBOT)
@@ -85,10 +85,6 @@ endif(BUILD_IMPORT)
 if(BUILD_INSPECTION)
   add_subdirectory(Inspection)
 endif(BUILD_INSPECTION)
-
-if(BUILD_ARCH)
-  add_subdirectory(Arch)
-endif(BUILD_ARCH)
 
 if(BUILD_ASSEMBLY)
   add_subdirectory(Assembly)

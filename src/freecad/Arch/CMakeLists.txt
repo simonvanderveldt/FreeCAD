@@ -1,8 +1,9 @@
 IF (BUILD_GUI)
-    PYSIDE_WRAP_RC(Arch_QRC_SRCS Resources/Arch.qrc)
+    PYSIDE_WRAP_RC(Arch_QRC_SRCS resources/Arch.qrc)
 ENDIF (BUILD_GUI)
 
 SET(Arch_SRCS
+    __init__.py
     Init.py
     InitGui.py
     ArchComponent.py
@@ -57,19 +58,19 @@ ADD_CUSTOM_TARGET(Arch ALL
     SOURCES ${Arch_SRCS} ${Arch_QRC_SRCS}
 )
 
-fc_copy_sources(Arch "${CMAKE_BINARY_DIR}/Mod/Arch" ${Arch_SRCS})
-fc_copy_sources(Arch "${CMAKE_BINARY_DIR}/Mod/Arch/Dice3DS" ${Dice3DS_SRCS})
+fc_copy_sources(Arch "${CMAKE_BINARY_DIR}/Mod/freecad/Arch" ${Arch_SRCS})
+fc_copy_sources(Arch "${CMAKE_BINARY_DIR}/Mod/freecad/Arch/Dice3DS" ${Dice3DS_SRCS})
 
 fc_target_copy_resource(Arch
-    ${CMAKE_SOURCE_DIR}/src/Mod/Arch
-    ${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_DATADIR}/Mod/Arch
+    ${CMAKE_SOURCE_DIR}/src/freecad/Arch
+    ${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_DATADIR}/Mod/freecad/Arch
     ${Arch_presets}
 )
 
 IF (BUILD_GUI)
     fc_target_copy_resource(Arch
         ${CMAKE_CURRENT_BINARY_DIR}
-        ${CMAKE_BINARY_DIR}/Mod/Arch
+        ${CMAKE_BINARY_DIR}/Mod/freecad/Arch
         Arch_rc.py)
 ENDIF (BUILD_GUI)
 
@@ -77,27 +78,29 @@ INSTALL(
     FILES
         ${Arch_SRCS}
         ${Arch_QRC_SRCS}
-    DESTINATION Mod/Arch
+    DESTINATION Mod/freecad/Arch
 )
 
 INSTALL(
     FILES
         ${Dice3DS_SRCS}
-    DESTINATION Mod/Arch/Dice3DS
+    DESTINATION Mod/freecad/Arch/Dice3DS
 )
 
 INSTALL(
     DIRECTORY
         Presets
     DESTINATION
-        ${CMAKE_INSTALL_DATADIR}/Mod/Arch
+        ${CMAKE_INSTALL_DATADIR}/Mod/freecad/Arch
     FILES_MATCHING PATTERN "*.csv*"
 )
 
 SET(ArchGuiIcon_SVG
-    Resources/icons/ArchWorkbench.svg
+    resources/icons/ArchWorkbench.svg
 )
 
-fc_copy_sources(Arch "${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_DATADIR}/Mod/Arch" ${ArchGuiIcon_SVG})
+fc_copy_sources(Arch "${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_DATADIR}/Mod/freecad/Arch" ${ArchGuiIcon_SVG})
 
-INSTALL(FILES ${ArchGuiIcon_SVG} DESTINATION "${CMAKE_INSTALL_DATADIR}/Mod/Arch/Resources/icons")
+INSTALL(DIRECTORY resources
+    DESTINATION Mod/freecad/Arch
+)
